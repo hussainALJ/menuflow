@@ -26,6 +26,7 @@ import ChefKDS from '@/pages/chef/ChefKDS'
 // Cashier
 import CashierDashboard from '@/pages/cashier/CashierDashboard'
 import CashierBill from '@/pages/cashier/CashierBill'
+import WaiterOrders from './pages/cashier/WaiterOrders'
 
 function PrivateRoute({ children, roles }) {
   const { user } = useAuthStore()
@@ -99,6 +100,7 @@ export default function App() {
       >
         <Route index element={<CashierDashboard />} />
         <Route path="bill/:sessionId" element={<CashierBill />} />
+        <Route path="orders" element={<WaiterOrders />} />
       </Route>
 
       {/* Fallback */}

@@ -23,9 +23,11 @@ const NAV = {
   ],
   Cashier: [
     { to: '/cashier', label: 'Tables & billing', icon: CreditCard, end: true },
+    { to: '/cashier/orders', label: 'Orders', icon: ClipboardList },
   ],
   Waiter: [
     { to: '/cashier', label: 'Tables & billing', icon: CreditCard, end: true },
+    { to: '/cashier/orders', label: 'Orders', icon: ClipboardList },
   ],
 }
 
