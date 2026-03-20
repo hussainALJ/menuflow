@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { getSocket } from '@/hooks/useSocket'
 import { api } from '@/lib/api'
 import { ArrowLeft, Receipt, CheckCircle2, Loader2, Printer } from 'lucide-react'
 import toast from 'react-hot-toast'
@@ -30,6 +31,18 @@ export default function CashierBill() {
   }
 
   useEffect(() => { load() }, [sessionId])
+
+  useEffect(() => {
+    const socket = getSocket()
+    socket.on('statusUpdate', () => load())
+    return () => socket.off('statusUpdate')
+  }, [load])
+
+  const BLOCKING_STATUSES = ['Pending', 'Preparing', 'Ready']
+
+  const hasBlockingOrders = session?.orders?.some(o =>
+    BLOCKING_STATUSES.includes(o.status)
+  )
 
   const handleCheckout = async () => {
     if (!confirm('Mark session as paid and release the table?')) return
@@ -140,16 +153,24 @@ export default function CashierBill() {
         </button>
 
         {!isClosed ? (
-          <button
-            onClick={handleCheckout}
-            disabled={checking}
-            className="btn-primary flex-1"
-          >
-            {checking
-              ? <Loader2 size={15} className="animate-spin" />
-              : <CheckCircle2 size={15} />}
-            {checking ? 'Processing…' : 'Checkout'}
-          </button>
+          <div className="flex-1 flex flex-col gap-2">
+            {hasBlockingOrders && (
+              <p className="text-xs text-amber-600 text-center bg-amber-50 border border-amber-200 rounded-xl px-3 py-2">
+                Waiting for all orders to be served before checkout
+              </p>
+            )}
+            <button
+              onClick={handleCheckout}
+              disabled={checking || hasBlockingOrders}
+              className="btn-primary w-full"
+              title={hasBlockingOrders ? 'All orders must be served or canceled first' : ''}
+            >
+              {checking
+                ? <Loader2 size={15} className="animate-spin" />
+                : <CheckCircle2 size={15} />}
+              {checking ? 'Processing…' : 'Checkout'}
+            </button>
+          </div>
         ) : (
           <div className="flex-1 flex items-center justify-center gap-2 py-2.5 bg-emerald-50 text-emerald-700 rounded-xl text-sm font-medium border border-emerald-200">
             <CheckCircle2 size={15} />
