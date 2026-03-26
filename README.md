@@ -65,6 +65,7 @@ src/
  
 - Node.js ≥ 18
 - A running instance of the Sufra backend API
+> **Backend:** [sufra-backend](https://github.com/hussainALJ/smart-rest-back)
  
 ### Installation
  
