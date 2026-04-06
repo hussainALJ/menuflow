@@ -2,6 +2,7 @@
  
 A React-based frontend for a QR-ordering and restaurant management system. Customers scan a table QR code to browse the menu, place orders, and request the bill — while staff manage everything through role-specific dashboards with real-time updates via Socket.IO.
  
+![Customer Menu](docs/flow.gif)
 ---
  
 ## Tech Stack
