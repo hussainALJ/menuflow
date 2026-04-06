@@ -114,6 +114,8 @@ npm run preview    # Previews the production build locally
 | **Waiter** | `/cashier` | Same view as Cashier |
  
 Role is decoded from the JWT payload on login and stored in `localStorage` via Zustand.
+
+![Bill Checkout](/docs/cashierBillCheckout.gif)
  
 ---
  
@@ -144,6 +146,8 @@ The frontend uses a singleton Socket.IO connection (`getSocket()` in `useSocket.
 | `join` | On connect | Joins a role/table room |
 | `callWaiter` | Customer Bill | Notifies cashier |
 | `requestBill` | Customer Bill | Notifies cashier |
+
+![Chef KDS](/docs/chefKDS.gif)
  
 ---
  
